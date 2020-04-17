@@ -21,7 +21,7 @@ public class Pet extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
-    private Customer ownerId;
+    private Customer owner;
 
     @Column(name = "birth_date")
     private LocalDate birthDate;

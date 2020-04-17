@@ -18,12 +18,13 @@ public class Employee extends BaseEntity {
     private String name;
 
     @Column
+    @ElementCollection(targetClass = EmployeeSkill.class)
     private Set<EmployeeSkill> skills;
 
     @Column
+    @ElementCollection(targetClass = DayOfWeek.class)
     private Set<DayOfWeek> daysAvailable;
 
-    @Column
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;

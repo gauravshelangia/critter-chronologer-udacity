@@ -12,7 +12,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
@@ -31,8 +33,10 @@ import java.util.stream.IntStream;
  * These tests should all pass once the project is complete.
  */
 @Transactional
-@SpringBootTest(classes = CritterApplication.class)
+@SpringBootTest(classes = CritterApplication.class,
+        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ActiveProfiles("test")
+@PropertySource("classpath:application-test.properties")
 public class CritterFunctionalTest {
 
     @Autowired
@@ -108,7 +112,8 @@ public class CritterFunctionalTest {
     }
 
     @Test
-    public void testFindOwnerByPet() {
+    public void testFindOwnerByPet() throws InterruptedException {
+        Thread.sleep(60000*3);
         CustomerDTO customerDTO = createCustomerDTO();
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
 

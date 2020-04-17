@@ -24,6 +24,6 @@ public class Customer extends BaseEntity {
     @Column
     private String notes;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "owner")
     private List<Pet> pets;
 }

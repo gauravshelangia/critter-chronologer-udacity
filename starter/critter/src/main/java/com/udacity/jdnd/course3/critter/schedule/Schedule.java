@@ -6,10 +6,7 @@ import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import com.udacity.jdnd.course3.critter.user.entity.Employee;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -19,13 +16,16 @@ import java.util.Set;
 @Table(name = "schedule")
 public class Schedule extends BaseEntity {
 
-    @Column
     @OneToMany(mappedBy = "schedule")
     private List<Employee> employees;
 
     @OneToMany(mappedBy = "schedule")
     private List<Pet> pets;
 
+    @Column
     private LocalDate date;
+
+    @Column
+    @ElementCollection(targetClass = EmployeeSkill.class)
     private Set<EmployeeSkill> activities;
 }
