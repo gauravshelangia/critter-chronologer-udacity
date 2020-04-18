@@ -3,6 +3,7 @@ package com.udacity.jdnd.course3.critter.user.service.impl;
 import com.udacity.jdnd.course3.critter.common.ErrorCode;
 import com.udacity.jdnd.course3.critter.common.PetException;
 import com.udacity.jdnd.course3.critter.user.EmployeeDTO;
+import com.udacity.jdnd.course3.critter.user.EmployeeRequestDTO;
 import com.udacity.jdnd.course3.critter.user.dao.EmployeeRepository;
 import com.udacity.jdnd.course3.critter.user.entity.Employee;
 import com.udacity.jdnd.course3.critter.user.service.EmployeeService;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -32,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDTO update(EmployeeDTO employeeDTO) {
         Employee employee = employeeRepository.findById(employeeDTO.getId()).orElse(null);
-        if (ObjectUtils.isEmpty(employee)){
+        if (ObjectUtils.isEmpty(employee)) {
             throw new PetException(ErrorCode.EMPLOYEE_NOT_EXISTS, new Object[]{employeeDTO.getId()});
         }
         BeanUtils.copyProperties(employeeDTO, employee);
@@ -44,7 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDTO getById(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId).orElse(null);
-        if (ObjectUtils.isEmpty(employee)){
+        if (ObjectUtils.isEmpty(employee)) {
             throw new PetException(ErrorCode.EMPLOYEE_NOT_EXISTS, new Object[]{employeeId});
         }
         EmployeeDTO employeeDTO = new EmployeeDTO();
@@ -55,11 +58,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void setAvailability(Set<DayOfWeek> daysAvailable, Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId).orElse(null);
-        if (ObjectUtils.isEmpty(employee)){
+        if (ObjectUtils.isEmpty(employee)) {
             throw new PetException(ErrorCode.EMPLOYEE_NOT_EXISTS, new Object[]{employeeId});
         }
         employee.setDaysAvailable(daysAvailable);
         employeeRepository.save(employee);
+    }
+
+    @Override
+    public List<EmployeeDTO> getAllByServiceAndTime(EmployeeRequestDTO employeeRequestDTO) {
+        Set<Employee> employees = employeeRepository.findAllBySkillsInAndSchedulesDate(employeeRequestDTO.getSkills(),
+                employeeRequestDTO.getDate());
+        List<EmployeeDTO> employeeDTOS = new ArrayList<>();
+        for (Employee employee : employees){
+            EmployeeDTO employeeDTO = new EmployeeDTO();
+            BeanUtils.copyProperties(employee, employeeDTO);
+            employeeDTOS.add(employeeDTO);
+        }
+        return employeeDTOS;
     }
 
 
