@@ -2,6 +2,9 @@ package com.udacity.jdnd.course3.critter.user.service;
 
 import com.udacity.jdnd.course3.critter.user.EmployeeDTO;
 
+import java.time.DayOfWeek;
+import java.util.Set;
+
 public interface EmployeeService {
 
     /**
@@ -9,7 +12,7 @@ public interface EmployeeService {
      * @param employeeDTO
      * @return
      */
-    EmployeeDTO create(EmployeeDTO employeeDTO);
+    EmployeeDTO save(EmployeeDTO employeeDTO);
 
     /**
      * Update an existing Employee
@@ -20,8 +23,17 @@ public interface EmployeeService {
 
     /**
      * Get Employee by Id
-     * @param employeeDTO
+     * @param employeeId
      * @return
      */
-    EmployeeDTO getById(EmployeeDTO employeeDTO);
+    EmployeeDTO getById(Long employeeId);
+
+    /**
+     * Add employee availability
+     * @param daysAvailable
+     * @param employeeId
+     */
+    void setAvailability(Set<DayOfWeek> daysAvailable, Long employeeId);
+
+
 }
