@@ -7,6 +7,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -29,8 +31,11 @@ public class Pet extends BaseEntity {
     @Column
     private String notes;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "schedule_id", nullable = true)
-    private Schedule schedule;
+    @ManyToMany
+    @JoinTable(
+            name = "pet_schedule",
+            joinColumns = @JoinColumn(name = "pet_id"),
+            inverseJoinColumns = @JoinColumn(name = "schedule_id"))
+    private List<Schedule> schedules;
 
 }

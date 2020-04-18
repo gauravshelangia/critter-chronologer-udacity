@@ -16,10 +16,10 @@ import java.util.Set;
 @Table(name = "schedule")
 public class Schedule extends BaseEntity {
 
-    @OneToMany(mappedBy = "schedule")
+    @ManyToMany(mappedBy = "schedules")
     private List<Employee> employees;
 
-    @OneToMany(mappedBy = "schedule")
+    @ManyToMany(mappedBy = "schedules")
     private List<Pet> pets;
 
     @Column

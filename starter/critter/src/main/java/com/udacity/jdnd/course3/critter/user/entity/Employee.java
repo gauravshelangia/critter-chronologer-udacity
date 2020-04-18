@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -25,8 +26,11 @@ public class Employee extends BaseEntity {
     @ElementCollection(targetClass = DayOfWeek.class)
     private Set<DayOfWeek> daysAvailable;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "schedule_id")
-    private Schedule schedule;
+    @ManyToMany
+    @JoinTable(
+            name = "employee_schedule",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "schedule_id"))
+    private List<Schedule> schedules;
 
 }
