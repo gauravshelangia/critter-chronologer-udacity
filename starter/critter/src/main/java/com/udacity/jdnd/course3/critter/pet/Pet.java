@@ -31,7 +31,11 @@ public class Pet extends BaseEntity {
     @Column
     private String notes;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
     @JoinTable(
             name = "pet_schedule",
             joinColumns = @JoinColumn(name = "pet_id"),

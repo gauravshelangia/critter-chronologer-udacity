@@ -16,10 +16,20 @@ import java.util.Set;
 @Table(name = "schedule")
 public class Schedule extends BaseEntity {
 
-    @ManyToMany(mappedBy = "schedules")
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "schedules")
     private List<Employee> employees;
 
-    @ManyToMany(mappedBy = "schedules")
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "schedules")
     private List<Pet> pets;
 
     @Column

@@ -26,7 +26,11 @@ public class Employee extends BaseEntity {
     @ElementCollection(targetClass = DayOfWeek.class)
     private Set<DayOfWeek> daysAvailable;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
     @JoinTable(
             name = "employee_schedule",
             joinColumns = @JoinColumn(name = "employee_id"),
