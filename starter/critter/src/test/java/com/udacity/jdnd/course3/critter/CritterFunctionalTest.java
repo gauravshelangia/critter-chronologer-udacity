@@ -11,9 +11,13 @@ import com.udacity.jdnd.course3.critter.user.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,10 +37,7 @@ import java.util.stream.IntStream;
  * These tests should all pass once the project is complete.
  */
 @Transactional
-@SpringBootTest(classes = CritterApplication.class,
-        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@ActiveProfiles("test")
-@PropertySource("classpath:application-test.properties")
+@SpringBootTest(classes = CritterApplication.class)
 public class CritterFunctionalTest {
 
     @Autowired
@@ -113,7 +114,6 @@ public class CritterFunctionalTest {
 
     @Test
     public void testFindOwnerByPet() throws InterruptedException {
-        Thread.sleep(60000*3);
         CustomerDTO customerDTO = createCustomerDTO();
         CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
 

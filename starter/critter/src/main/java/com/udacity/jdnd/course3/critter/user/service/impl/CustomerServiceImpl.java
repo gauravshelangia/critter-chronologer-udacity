@@ -16,6 +16,7 @@ import org.springframework.util.ObjectUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.udacity.jdnd.course3.critter.common.ErrorCode.CUSTOMER_NOT_EXISTS;
 
@@ -33,8 +34,10 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDTO, customer);
         customer = customerRepository.save(customer);
-        BeanUtils.copyProperties(customer, customerDTO);
-        return customerDTO;
+        CustomerDTO savedCustomerDTO = new CustomerDTO();
+        BeanUtils.copyProperties(customer, savedCustomerDTO);
+        savedCustomerDTO.setPetIds(customer.getPets().stream().map(pet -> pet.getId()).collect(Collectors.toList()));
+        return savedCustomerDTO;
     }
 
     @Override
@@ -46,8 +49,10 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerOptional.get();
         BeanUtils.copyProperties(customerDTO, customer);
         customer = customerRepository.save(customer);
-        BeanUtils.copyProperties(customer, customerDTO);
-        return customerDTO;
+        CustomerDTO savedCustomerDTO = new CustomerDTO();
+        BeanUtils.copyProperties(customer, savedCustomerDTO);
+        savedCustomerDTO.setPetIds(customer.getPets().stream().map(pet -> pet.getId()).collect(Collectors.toList()));
+        return savedCustomerDTO;
     }
 
     @Override
@@ -69,6 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
             for (Customer customer : customers){
                 CustomerDTO customerDTO = new CustomerDTO();
                 BeanUtils.copyProperties(customer, customerDTO);
+                customerDTO.setPetIds(customer.getPets().stream().map(pet -> pet.getId()).collect(Collectors.toList()));
                 customerDTOS.add(customerDTO);
             }
         }
@@ -83,6 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
         CustomerDTO customerDTO = new CustomerDTO();
         BeanUtils.copyProperties(customer, customerDTO);
+        customerDTO.setPetIds(customer.getPets().stream().map(pet -> pet.getId()).collect(Collectors.toList()));
         return customerDTO;
     }
 

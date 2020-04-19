@@ -8,6 +8,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +24,7 @@ public class Schedule extends BaseEntity {
                     CascadeType.MERGE
             },
             mappedBy = "schedules")
-    private List<Employee> employees;
+    private List<Employee> employees = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -30,12 +32,12 @@ public class Schedule extends BaseEntity {
                     CascadeType.MERGE
             },
             mappedBy = "schedules")
-    private List<Pet> pets;
+    private List<Pet> pets = new ArrayList<>();
 
     @Column
     private LocalDate date;
 
     @Column
     @ElementCollection(targetClass = EmployeeSkill.class)
-    private Set<EmployeeSkill> activities;
+    private Set<EmployeeSkill> activities = new HashSet<>();
 }

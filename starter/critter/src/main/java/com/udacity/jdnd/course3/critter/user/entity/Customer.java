@@ -4,10 +4,8 @@ import com.udacity.jdnd.course3.critter.common.BaseEntity;
 import com.udacity.jdnd.course3.critter.pet.Pet;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,6 +22,7 @@ public class Customer extends BaseEntity {
     @Column
     private String notes;
 
-    @OneToMany(mappedBy = "owner")
-    private List<Pet> pets;
+    @OneToMany(fetch = FetchType.EAGER,
+            mappedBy = "owner")
+    private List<Pet> pets = new ArrayList<>();
 }

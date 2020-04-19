@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -40,6 +41,6 @@ public class Pet extends BaseEntity {
             name = "pet_schedule",
             joinColumns = @JoinColumn(name = "pet_id"),
             inverseJoinColumns = @JoinColumn(name = "schedule_id"))
-    private List<Schedule> schedules;
+    private List<Schedule> schedules = new ArrayList<>();
 
 }

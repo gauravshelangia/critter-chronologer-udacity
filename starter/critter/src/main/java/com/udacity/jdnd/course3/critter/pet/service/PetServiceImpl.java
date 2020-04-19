@@ -37,8 +37,10 @@ public class PetServiceImpl implements PetService {
         }
         pet.setOwner(customer);
         pet = petRepository.save(pet);
-        BeanUtils.copyProperties(pet, petDTO);
-        return petDTO;
+        customer.getPets().add(pet);
+        PetDTO savedPetDTO = new PetDTO();
+        BeanUtils.copyProperties(pet, savedPetDTO);
+        return savedPetDTO;
     }
 
     @Override
@@ -54,8 +56,10 @@ public class PetServiceImpl implements PetService {
         }
         pet.setOwner(customer);
         pet = petRepository.save(pet);
-        BeanUtils.copyProperties(pet, petDTO);
-        return petDTO;
+        customer.getPets().add(pet);
+        PetDTO savedPetDTO = new PetDTO();
+        BeanUtils.copyProperties(pet, savedPetDTO);
+        return savedPetDTO;
     }
 
     @Override

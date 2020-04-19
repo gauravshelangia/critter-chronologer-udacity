@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -67,8 +65,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeDTO> getAllByServiceAndTime(EmployeeRequestDTO employeeRequestDTO) {
-        Set<Employee> employees = employeeRepository.findAllBySkillsInAndSchedulesDate(employeeRequestDTO.getSkills(),
-                employeeRequestDTO.getDate());
+        List<Employee> employees = employeeRepository.getAllbyAvailability(employeeRequestDTO);
+
         List<EmployeeDTO> employeeDTOS = new ArrayList<>();
         for (Employee employee : employees){
             EmployeeDTO employeeDTO = new EmployeeDTO();

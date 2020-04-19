@@ -53,8 +53,12 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
 
         schedule = scheduleRepository.save(schedule);
-        BeanUtils.copyProperties(schedule, scheduleDTO);
-        return scheduleDTO;
+        ScheduleDTO savedScheduledDTO = new ScheduleDTO();
+        BeanUtils.copyProperties(schedule, savedScheduledDTO);
+        savedScheduledDTO.setEmployeeIds(schedule.getEmployees().stream()
+                .map(employee -> employee.getId()).collect(Collectors.toList()));
+        savedScheduledDTO.setPetIds(schedule.getPets().stream().map(pet -> pet.getId()).collect(Collectors.toList()));
+        return savedScheduledDTO;
     }
 
     @Override
@@ -74,8 +78,12 @@ public class ScheduleServiceImpl implements ScheduleService {
             schedule.setEmployees(employees);
         }
         schedule = scheduleRepository.save(schedule);
-        BeanUtils.copyProperties(schedule, scheduleDTO);
-        return scheduleDTO;
+        ScheduleDTO savedScheduledDTO = new ScheduleDTO();
+        BeanUtils.copyProperties(schedule, savedScheduledDTO);
+        savedScheduledDTO.setEmployeeIds(schedule.getEmployees().stream()
+                .map(employee -> employee.getId()).collect(Collectors.toList()));
+        savedScheduledDTO.setPetIds(schedule.getPets().stream().map(pet -> pet.getId()).collect(Collectors.toList()));
+        return savedScheduledDTO;
     }
 
     @Override
